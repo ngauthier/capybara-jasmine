@@ -10,12 +10,11 @@ class Capybara::Jasmine::TestTask
       Capybara.app = Runner.new(lib_files + spec_files)
       Capybara.current_driver = Capybara.javascript_driver
       visit '/'
-      wait_until { evaluate_script "window.reporter && window.reporter.done" }
-      success = evaluate_script "window.reporter.clean"
-      output = evaluate_script "window.reporter.output"
-      output = CGI.unescape(output)
+      wait_until { evaluate_script("window.reporter && window.reporter.done") }
+      success = evaluate_script("window.reporter.clean")
+      output = CGI.unescape evaluate_script("window.reporter.output")
       if !success
-        $stderr.puts errors
+        $stderr.puts output
         exit(1)
       else
         $stdout.puts output
@@ -28,19 +27,20 @@ class Capybara::Jasmine::TestTask
     def initialize(files)
       @files = files
     end
+
     def call(env)
       path = env['REQUEST_PATH'][1..-1]
       case path
       when ''
-        template = File.read(File.join(File.dirname(__FILE__), 'SpecRunner.html'))
+        template = read_local 'SpecRunner.html'
         template.gsub!("{{SCRIPTS}}", script_tags)
         [200, {'Content-Type' => 'text/html'}, [template.to_s]]
       when 'jasmine.js'
-        jasmine = File.read(File.join(File.dirname(__FILE__), 'jasmine.js'))
+        jasmine = read_local 'jasmine.js'
         [200, {'Content-Type' => 'text/javascript'}, [jasmine.to_s]]
       when 'capybara_reporter.js'
-        jasmine = File.read(File.join(File.dirname(__FILE__), 'capybara_reporter.js'))
-        [200, {'Content-Type' => 'text/javascript'}, [jasmine.to_s]]
+        reporter = read_local 'capybara_reporter.js'
+        [200, {'Content-Type' => 'text/javascript'}, [reporter.to_s]]
       else
         if @files.include? path
           data = File.read(path)
@@ -49,6 +49,10 @@ class Capybara::Jasmine::TestTask
           [404, {}, []]
         end
       end
+    end
+
+    def read_local(file)
+      File.read(File.join(File.dirname(__FILE__), file))
     end
 
     def script_tags
