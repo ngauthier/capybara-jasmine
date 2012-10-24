@@ -4,6 +4,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Nick Gauthier"]
   gem.email         = ["ngauthier@gmail.com"]
   gem.description   = %q{Run your jasmine.js tests with capybara}
+  gem.summary       = %q{Rake TestTask style pure ruby test runner for jasmine via capybara}
   gem.homepage      = "http://github.com/ngauthier/capybara-jasmine"
 
   gem.files         = `git ls-files`.split($\)
