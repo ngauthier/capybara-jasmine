@@ -1,0 +1,20 @@
+<!doctype>
+<html>
+  <head>
+    <title>Jasmine SpecRunner</title>
+    <script type="text/javascript" src="jasmine.js"></script>
+    <script type="text/javascript" src="capybara_reporter.js"></script>
+    {{SCRIPTS}}
+    <script type="text/javascript">
+      (function() {
+        var jasmineEnv = jasmine.getEnv();
+        window.reporter = new CapybaraReporter();
+        jasmineEnv.addReporter(reporter);
+        window.onload = function() {
+          jasmineEnv.execute();
+        };
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
