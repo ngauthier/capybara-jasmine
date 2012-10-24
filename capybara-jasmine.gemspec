@@ -3,9 +3,8 @@
 Gem::Specification.new do |gem|
   gem.authors       = ["Nick Gauthier"]
   gem.email         = ["ngauthier@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{Run your jasmine.js tests with capybara}
+  gem.homepage      = "http://github.com/ngauthier/capybara-jasmine"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
