@@ -10,7 +10,9 @@ class Capybara::Jasmine::TestTask
       Capybara.app = Runner.new(lib_files + spec_files)
       Capybara.current_driver = Capybara.javascript_driver
       visit '/'
-      wait_until { evaluate_script("window.reporter && window.reporter.done") }
+      until evaluate_script("window.reporter && window.reporter.done") do
+        sleep 0.05
+      end
       success = evaluate_script("window.reporter.clean")
       output = CGI.unescape evaluate_script("window.reporter.output")
       if !success
