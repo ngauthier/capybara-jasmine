@@ -6,15 +6,11 @@ Run Jasmine Specs via Capybara. That way, you can run it under any of capybara's
 
 Add this line to your application's Gemfile:
 
-    gem 'capybara-jasmine'
+    gem 'capybara-jasmine', github: 'ngauthier/capybara-jasmine'
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install capybara-jasmine
 
 ## Usage
 
